@@ -8,12 +8,12 @@
 </head>
 <body>
     <div id="form-container">
-        <form action="">
+        <form action="/signIn" method="POST"> <!-- Updated action and method attributes -->
             <h1>Log In</h1>
-            <input type="text" placeholder="Username"><br>
-            <input type="password" placeholder="Password"><br>
+            <input type="text" name="username" placeholder="Username"><br> <!-- Added name attribute -->
+            <input type="password" name="password" placeholder="Password"><br> <!-- Added name attribute -->
             <p>Don't have an account ? <a href="/Register"><span style="color: rgb(0, 166, 255);">Create account</span></a></p>
-            <button>Sign In</button>
+            <button type="submit">Sign In</button> <!-- Added type attribute -->
         </form>
     </div>
 </body>

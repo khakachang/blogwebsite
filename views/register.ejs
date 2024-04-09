@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Blogs | Register</title>
+    <title>Blogs | Register</title>
     <link rel="stylesheet" href="stylesheets/signIn.css">
 </head>
 <body>
     <div id="form-container">
-        <form action="">
+        <form action="/register" method="POST">
             <h1>Register</h1>
-            <input type="text" placeholder="Username"><br>
-            <input type="password" placeholder="Password"><br>
+            <input type="text" name="username" placeholder="Username"><br>
+            <input type="password" name="password" placeholder="Password"><br>
             <p>Already have an account ? <a href="/signIn"><span style="color: rgb(0, 166, 255);">Sign In</span></a></p>
-            <button>Register</button>
+            <button type="submit">Register</button>
         </form>
     </div>
 </body>

@@ -11,23 +11,25 @@
 <body>
     <div id="navbar">
         <a href="/"><button id="cancel" class="post-button">Cancel</button></a>
-        <button class="post-button">Post</button>
+        <form action="/post" method="POST" enctype="multipart/form-data">
+
+            <!-- Form to submit blog post -->
+            <button type="submit" class="post-button">Post</button>
+            <label for="title">Title</label><br>
+            <div class="input-container">
+                <input id="title" type="text" name="title" placeholder="Write your title here"><br>
+            </div>
+        
+            <label for="thumbnail">Thumbnail</label><br>
+            <input type="file" name="thumbnail" id="thumbnail"><br>
+
+            
+        
+            <label for="content">Content</label><br><br>
+            <textarea id="markdown-editor" name="content"></textarea>
+        </form>
+        
     </div>
-    <form action="">
-        <label for="title">Title</label><br>
-        <div class="input-container">
-            <input id="title" type="text" placeholder="Write you title here"><br>
-        </div>
-
-        <label for="add-picter-div">Thumbnail</label>
-        <div id="add-picter-div">
-            <p>1920 × 1080</p>
-            <button>Upload</button>
-        </div>
-        <label for="content">Content</label><br><br>
-        <textarea id="markdown-editor"></textarea>
-    </form>
-
 
     <script>
         var simplemde = new SimpleMDE({
