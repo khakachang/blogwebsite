@@ -1,15 +1,70 @@
 body {
     background-color: #02786d;
     font-family: sans-serif;
+    margin: 0px;
+    padding: 0px;
 }
-#navbar {
-    width: 400px;
-    display: grid;
-    grid-template-columns: auto auto auto auto;
-}
-.nav-text {
-    text-align: center;
-    color: #f7ff64;
+.link-item {
+    margin-left: 20px;
     font-size: 24px;
     text-decoration: none;
+    color: #f7ff64;
+}
+#navbar {
+    background-color: #02786d;
+    /* box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.2); */
+    position: sticky;
+    top: 0px;
+    padding: 10px;
+    align-items: center;
+    align-items: center;
+    text-align: end;
+    display: grid;
+    grid-template-columns: auto auto;
+    
+}
+#sign-in {
+    font-size: 18px;
+    border-style: none;
+    border-radius: 5px;
+    color: black;
+    height: 40px;
+    width: 80px;
+    background-color: #ff8a8a;
+}
+
+
+#content {
+    justify-content: space-evenly;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 550px 550px 550px;
+}
+.card {
+    display: grid;
+    grid-template-rows: auto auto;
+    margin: 10px;
+    font-size: 24px;
+    /* background-color: red; */
+}
+.card img {
+    border-radius: 5px;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}   
+.card p {
+    color: black;
+    margin: 0px;
+    margin-top: 5px;
+}
+
+@media only screen and (max-width: 600px) {
+    #content {
+        grid-template-columns: auto;
+    }
+}
+/* Override the scroll indicator CSS */
+::-webkit-scrollbar {
+    display: none; /* Hide the scrollbar */
 }
