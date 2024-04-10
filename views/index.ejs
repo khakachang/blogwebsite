@@ -34,9 +34,10 @@
                     <!-- Provide a placeholder image or handle the absence of thumbnail_path -->
                     <p>No image available</p>
                 <% } %>
-                <p><%= blog.title %></p>
+                <a href="/<%= blog.username %>/<%= encodeURIComponent(blog.title) %>"><p><%= blog.title %></p></a>
             </div>
         <% }); %>
+        
     </div>
     
     

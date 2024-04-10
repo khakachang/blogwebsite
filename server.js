@@ -8,6 +8,8 @@ const bodyParser = require("body-parser");
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const multer = require('multer');
+const markdownIt = require('markdown-it');
+const md = new markdownIt();
 
 // Set up multer storage
 const storage = multer.diskStorage({
@@ -19,6 +21,7 @@ const storage = multer.diskStorage({
         cb(null, uniqueSuffix + '-' + file.originalname);
     }
 });
+
 
 
 // Create the multer instance with the storage options
@@ -195,15 +198,15 @@ app.post("/post", upload.single('thumbnail'), async (req, res) => {
     thumbnailPath = thumbnailPath.replace(/\\/g, '/');
 
     // Remove the "/public" part from the beginning of the path
-    thumbnailPath = thumbnailPath.replace(/^\/public/, '');
+    thumbnailPath = thumbnailPath.replace(/^public\//, '');
 
     try {
-        // Assuming the user is logged in and you have access to the user_id from the session
-        const user_id = req.session.user_id; // Ensure you set this value somewhere in your code
+        // Retrieve the user_id from the session
+        const user_id = req.session.user_id; // Assuming you set this value somewhere in your code
 
         // Insert the new blog post into the database
-        const queryString = "INSERT INTO Blog (title, content, thumbnail_path, user_id) VALUES (?, ?, ?, ?)";
-        connection.query(queryString, [title, content, thumbnailPath, user_id], (err, result) => {
+        const queryString = "INSERT INTO Blog (title, content, thumbnail_path, user_id, username) VALUES (?, ?, ?, ?, ?)";
+        connection.query(queryString, [title, content, thumbnailPath, user_id, req.session.username], (err, result) => {
             if (err) {
                 console.error('Error creating blog post: ', err);
                 res.status(500).send('Error creating blog post');
@@ -218,9 +221,42 @@ app.post("/post", upload.single('thumbnail'), async (req, res) => {
     }
 });
 
-
-
 //////////////////////////////////
+
+
+
+// Render individual blog post
+app.get("/:username/:title", (req, res) => {
+    const { username, title } = req.params;
+
+    // Retrieve the blog post content from the database based on username and title
+    const queryString = "SELECT * FROM Blog WHERE username = ? AND title = ?";
+    connection.query(queryString, [username, decodeURIComponent(title)], (err, results) => {
+        if (err) {
+            console.error('Error retrieving blog post: ', err);
+            res.status(500).send('Error retrieving blog post');
+            return;
+        }
+
+        if (results.length === 0) {
+            // Blog post not found
+            res.status(404).send('Blog post not found');
+            return;
+        }
+
+        const blogPost = results[0];
+
+        // Convert Markdown content to HTML using markdown-it
+        const htmlContent = md.render(blogPost.content);
+
+        // Render the individual blog post page and pass the HTML content to the template
+        res.render("blogPost", { title: blogPost.title, htmlContent });
+    });
+});
+
+
+
+
 
 // Start the server
 app.listen(port, () => {
