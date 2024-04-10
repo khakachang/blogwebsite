@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogs | My Blogs</title>
+        <link rel="stylesheet" href="stylesheets/styles.css">
+</head>
+<body>
+    <h1 id="userPost"><%= username %> Blogs</h1>
+    <div id="content">
+        <% blogs.forEach(blog => { %>
+            <a href="/<%= blog.username %>/<%= encodeURIComponent(blog.title) %>"><div class="card">
+                <% if (blog.thumbnail_path) { %>
+                    <img src="<%= blog.thumbnail_path.replace('/public', '') %>" alt="">
+                <% } else { %>
+                    <!-- Provide a placeholder image or handle the absence of thumbnail_path -->
+                    <div>
+                        <p>No image available</p>
+                    </div>
+                <% } %>
+                <p><%= blog.title %></p>
+            </div></a>
+        <% }); %>
+    </div>
+</body>
+</html>

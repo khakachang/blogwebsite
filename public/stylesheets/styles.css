@@ -58,6 +58,25 @@ body {
     margin: 0px;
     margin-top: 5px;
 }
+.card div {
+    border-radius: 5px;
+    background-color: grey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    width: 100%;
+}
+
+#content a {
+    text-decoration: none;
+}
+
+#userPost {
+    color: #f7ff64;
+    text-align: center;
+}
+
 
 @media only screen and (max-width: 600px) {
     #content {

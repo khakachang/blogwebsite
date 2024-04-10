@@ -152,10 +152,45 @@ app.get("/Register", (req, res) => {
     res.render("register");
 });
 
+// Render the myBlogs.ejs template for the /myBlogs route
+app.get("/myBlogs", (req, res) => {
+    // Check if user is signed in
+    if (req.session.username) {
+        // Retrieve blogs posted by the current user from the database
+        const queryString = "SELECT * FROM Blog WHERE username = ?";
+        connection.query(queryString, [req.session.username], (err, results) => {
+            if (err) {
+                console.error('Error retrieving user blogs: ', err);
+                res.status(500).send('Error retrieving user blogs');
+                return;
+            }
+
+            // Render the myBlogs page and pass the user's blogs data to the template
+            res.render("myBlogs", { username: req.session.username, blogs: results });
+        });
+    } else {
+        // User is not signed in, redirect to sign in page or display an alert
+        res.send('<script>alert("Please sign in to see your blogs."); window.location.href = "/signIn";</script>');
+    }
+});
+
+
 // Render the post.ejs template for the /Post route
 app.get("/Post", (req, res) => {
-    res.render("post");
+    // Check if user is signed in
+    if (req.session.username) {
+        // User is signed in, render the post page
+        res.render("post");
+    } else {
+        // User is not signed in, redirect to sign in page or display an alert
+        // Option 1: Redirect to sign in page
+        // res.redirect("/signIn");
+
+        // Option 2: Display an alert
+        res.send('<script>alert("Please sign in to post."); window.location.href = "/signIn";</script>');
+    }
 });
+
 
 
 ////////////////////////////////////////////////////////////
@@ -192,13 +227,17 @@ app.post("/register", async (req, res) => {
 // Handle blog post submission
 app.post("/post", upload.single('thumbnail'), async (req, res) => {
     const { title, content } = req.body;
-    let thumbnailPath = req.file.path;
+    let thumbnailPath = "";
 
-    // Replace backslashes with forward slashes in the file path
-    thumbnailPath = thumbnailPath.replace(/\\/g, '/');
-
-    // Remove the "/public" part from the beginning of the path
-    thumbnailPath = thumbnailPath.replace(/^public\//, '');
+    // Check if thumbnail was uploaded
+    if (req.file) {
+        // Thumbnail was uploaded, set thumbnailPath
+        thumbnailPath = req.file.path;
+        // Replace backslashes with forward slashes in the file path
+        thumbnailPath = thumbnailPath.replace(/\\/g, '/');
+        // Remove the "/public" part from the beginning of the path
+        thumbnailPath = thumbnailPath.replace(/^public\//, '');
+    }
 
     try {
         // Retrieve the user_id from the session
@@ -221,6 +260,7 @@ app.post("/post", upload.single('thumbnail'), async (req, res) => {
     }
 });
 
+
 //////////////////////////////////
 
 
@@ -229,7 +269,7 @@ app.post("/post", upload.single('thumbnail'), async (req, res) => {
 app.get("/:username/:title", (req, res) => {
     const { username, title } = req.params;
 
-    // Retrieve the blog post content from the database based on username and title
+    // Retrieve the blog post content and username from the database based on username and title
     const queryString = "SELECT * FROM Blog WHERE username = ? AND title = ?";
     connection.query(queryString, [username, decodeURIComponent(title)], (err, results) => {
         if (err) {
@@ -249,10 +289,11 @@ app.get("/:username/:title", (req, res) => {
         // Convert Markdown content to HTML using markdown-it
         const htmlContent = md.render(blogPost.content);
 
-        // Render the individual blog post page and pass the HTML content to the template
-        res.render("blogPost", { title: blogPost.title, htmlContent });
+        // Render the individual blog post page and pass the HTML content and username to the template
+        res.render("blogPost", { title: blogPost.title, htmlContent, username: blogPost.username });
     });
 });
+
 
 
 
