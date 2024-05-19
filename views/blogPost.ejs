@@ -13,10 +13,14 @@
         <!-- Your navbar content here -->
     </div>
     <div id="content">
-        <p id="author">Created by <%= username %></p>
+        
         <div id="blogContent"><%- htmlContent %></div>
+        
     </div>
-    
+    <hr>
+    <footer>
+        <p id="author">Written by <span style="font-weight: bold;"><%= username %></span></p>
+    </footer>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </body>
 
