@@ -1,5 +1,5 @@
 body {
-    background-color: #02786d;
+    background-color: antiquewhite;
     font-family: sans-serif;
     margin: 0px;
     padding: 0px;
@@ -8,10 +8,10 @@ body {
     margin-left: 20px;
     font-size: 24px;
     text-decoration: none;
-    color: #f7ff64;
+    color: black;
 }
 #navbar {
-    background-color: #02786d;
+    background-color: antiquewhite;
     /* box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.2); */
     position: sticky;
     top: 0px;
