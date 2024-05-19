@@ -1,6 +1,6 @@
 /* Default styles */
 body {
-    background-color: #02786d;
+    background-color: antiquewhite;
     font-family: sans-serif;
 }
 
@@ -38,11 +38,11 @@ button {
 }
 
 p{
-    color: white;
+    color: black;
     font-size: 18px;
 }
 h1 {
-    color: white;
+    color: black;
 }
 
 a {

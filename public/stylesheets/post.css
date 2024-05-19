@@ -1,5 +1,5 @@
 body {
-    background-color: #02786d;
+    background-color: antiquewhite;
     font-family: sans-serif;
     margin: 0px;
     padding: 0px;
@@ -8,7 +8,7 @@ body {
 #navbar {
     text-align: end;
     padding: 10px;
-    background-color: #02786d;
+    background-color: antiquewhite;
     box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.2);
 }
 .post-button {
@@ -25,7 +25,7 @@ body {
 }
 label {
     font-size: 28px;
-    color: white;
+    color: black;
     
 }
 form {
